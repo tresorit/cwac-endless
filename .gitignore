@@ -1,8 +1,0 @@
-local.properties
-bin/
-gen/
-tests/bin/
-tests/gen/
-tests/local.properties
-/.classpath
-/.project
