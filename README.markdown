@@ -119,6 +119,16 @@ so you can do something to let the user know what went wrong.
 Have `onException()` return `true` if you want to retry loading data in the background,
 `false` otherwise.
 
+### The Threading
+
+By default, `EndlessAdapter` will use `AsyncTask` with the classic
+thread pool. If you would prefer your `EndlessAdapter` use the
+serialized pool on API Level 13+ projects, call `setSerialized(true)`.
+
+And if that paragraph was clear as mud,
+[here is a blog post covering the changes to `AsyncTask`](http://commonsware.com/blog/2012/04/20/asynctask-threading-regression-confirmed.html)
+that pertain to the serialized pool.
+
 Dependencies
 ------------
 This project relies upon the [CWAC AdapterWrapper][adapter] project.
@@ -128,8 +138,8 @@ ones that you have patched yourself.
 
 Version
 -------
-This is version v0.7.0 of this module, meaning it is slowly
-becoming a respected member of the Android community.
+This is version v0.8.0 of this module, meaning it is getting up
+there in age, as is its author.
 
 Demo
 ----
@@ -160,6 +170,7 @@ Do not ask for help via Twitter.
 
 Release Notes
 -------------
+* v0.8.0: added `setSerialized()` and `isSerialized()`
 * v0.7.0: `cacheInBackground()` can now throw checked exceptions, new `getContext()` method available for subclasses
 * v0.6.1: merged bug fix from rgladwell/cwac-endless; added @Override annotations
 * v0.6.0: added pending `View` support via constructor
@@ -167,6 +178,10 @@ Release Notes
 * v0.4.0: eliminated need for `rebindPendingView()`, documented the no-data scenario
 * v0.3.1: fixed bug in manifest
 * v0.3.0: converted to Android library project, added call to `notifyDataSetChanged()`
+
+Who Made This?
+--------------
+<a href="http://commonsware.com">![CommonsWare](http://commonsware.com/images/logo.png)</a>
 
 [gg]: http://groups.google.com/group/cw-android
 [adapter]: http://github.com/commonsguy/cwac-adapter/tree/master
