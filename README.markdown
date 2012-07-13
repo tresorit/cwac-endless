@@ -32,7 +32,8 @@ way to the bottom.
 
 Note that this has been tested with `ArrayAdapter` extensively
 but may not work with other adapter types, particularly
-`SimpleAdapter`.
+`SimpleAdapter`. It also will only work with a `ListView` or
+possibly other one-`View`-at-a-time `AdapterView` implementations.
 
 This is available as a JAR file from the downloads area of this GitHub repo.
 The project itself is set up as an Android library project,
