@@ -149,7 +149,7 @@ ones that you have patched yourself.
 
 Version
 -------
-This is version v0.9.0 of this module, which is causing the author
+This is version v0.9.1 of this module, which is causing the author
 some trepidation, seeing that "9" there, and thinking that it is
 an awfully big number.
 
@@ -187,6 +187,7 @@ Do not ask for help via Twitter.
 
 Release Notes
 -------------
+* v0.9.1: made `AppendTask` constructor `protected`
 * v0.9.0: added `restartAppending()` and `buildTask()`, refactored `AppendTask`, added new sample activity
 * v0.8.0: added `setSerialized()` and `isSerialized()`
 * v0.7.0: `cacheInBackground()` can now throw checked exceptions, new `getContext()` method available for subclasses
