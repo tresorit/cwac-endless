@@ -119,6 +119,10 @@ so you can do something to let the user know what went wrong.
 Have `onException()` return `true` if you want to retry loading data in the background,
 `false` otherwise.
 
+If your exceptional situation has recovered (e.g., you now have Internet
+access where before you did not), call `restartAppending()`, and the
+normal logic will resume on the next scroll-to-the-bottom.
+
 ### The Threading
 
 By default, `EndlessAdapter` will use `AsyncTask` with the classic
@@ -129,6 +133,12 @@ And if that paragraph was clear as mud,
 [here is a blog post covering the changes to `AsyncTask`](http://commonsware.com/blog/2012/04/20/asynctask-threading-regression-confirmed.html)
 that pertain to the serialized pool.
 
+If you wish to extend what is done in this `AsyncTask`, create your
+own subclass of the static `EndlessAdapter.AppendTask`, implement what you need
+(chaining to the superclass to inherit existing behavior), and
+override `buildTask()` in your `EndlessAdapter` subclass to create
+an instance of your own custom task class.
+
 Dependencies
 ------------
 This project relies upon the [CWAC AdapterWrapper][adapter] project.
@@ -138,13 +148,19 @@ ones that you have patched yourself.
 
 Version
 -------
-This is version v0.8.0 of this module, meaning it is getting up
-there in age, as is its author.
+This is version v0.9.0 of this module, which is causing the author
+some trepidation, seeing that "9" there, and thinking that it is
+an awfully big number.
 
 Demo
 ----
 In the `demo/` sub-project you will find
-a sample activity that demonstrates the use of `EndlessAdapter`.
+three sample activities that demonstrate the use of `EndlessAdapter`.
+Included in this is `EndlessAdapterFragmentDemo`, which shows how
+to use `EndlessAdapter` in a retained fragment. Note that while
+the `demo/` sample requires API Level 11 (as `EndlessAdapterFragmentDemo`
+uses native fragments and the native action bar), `EndlessAdapter`
+should work back to API Level 3.
 
 Note that when you build the JAR via `ant jar`, the sample
 activity is not included, nor any resources -- only the
@@ -170,6 +186,7 @@ Do not ask for help via Twitter.
 
 Release Notes
 -------------
+* v0.9.0: added `restartAppending()` and `buildTask()`, refactored `AppendTask`, added new sample activity
 * v0.8.0: added `setSerialized()` and `isSerialized()`
 * v0.7.0: `cacheInBackground()` can now throw checked exceptions, new `getContext()` method available for subclasses
 * v0.6.1: merged bug fix from rgladwell/cwac-endless; added @Override annotations
