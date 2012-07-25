@@ -59,7 +59,6 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   private Context context;
   private int pendingResource=-1;
   private boolean isSerialized=false;
-  private boolean runInBackground=true;
 
   /**
    * Constructor wrapping a supplied ListAdapter
@@ -93,28 +92,6 @@ abstract public class EndlessAdapter extends AdapterWrapper {
 
   public void restartAppending() {
     keepOnAppending.set(true);
-  }
-
-  /**
-   * When set to false, cacheInBackground is called
-   * directly, rather than from an AsyncTask.
-   * 
-   * This is useful if for example you have code to populate
-   * the adapter that already runs in a background thread,
-   * and simply don't need the built in background
-   * functionality.
-   * 
-   * When using this you must remember to call onDataReady()
-   * once you've appended your data.
-   * 
-   * Default value is true.
-   * 
-   * @param runInBackground
-   * 
-   *          :see #cacheInBackground() :see #onDataReady()
-   */
-  public void setRunInBackground(boolean runInBackground) {
-    this.runInBackground=runInBackground;
   }
 
   /**
@@ -192,18 +169,7 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     if (position == super.getCount() && keepOnAppending.get()) {
       if (pendingView == null) {
         pendingView=getPendingView(parent);
-
-        if (runInBackground) {
-          executeAsyncTask(buildTask());
-        }
-        else {
-          try {
-            keepOnAppending.set(cacheInBackground());
-          }
-          catch (Exception e) {
-            keepOnAppending.set(onException(pendingView, e));
-          }
-        }
+        executeAsyncTask(buildTask());
       }
 
       return(pendingView);
