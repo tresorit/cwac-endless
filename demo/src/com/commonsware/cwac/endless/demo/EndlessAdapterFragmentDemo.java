@@ -39,14 +39,14 @@ public class EndlessAdapterFragmentDemo extends Activity implements
 
   @Override
   public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    // no-op
+    onTabSelected(tab, ft);
   }
 
   @Override
   public void onTabSelected(Tab tab, FragmentTransaction ft) {
     switch ((Tabs)tab.getTag()) {
       case TAB_SIMPLE:
-        showSimple();
+        showSimple(ft);
         break;
     }
   }
@@ -56,16 +56,16 @@ public class EndlessAdapterFragmentDemo extends Activity implements
     // no-op
   }
 
-  private void showSimple() {
+  private void showSimple(FragmentTransaction ft) {
     Fragment f=getFragmentManager().findFragmentByTag(TAG_SIMPLE);
 
     if (f == null) {
       f=new EndlessAdapterFragment();
+      ft.replace(android.R.id.content, f, TAG_SIMPLE);
     }
-
-    getFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, f, TAG_SIMPLE)
-                        .commit();
+    else if (f.isHidden()) {
+      ft.replace(android.R.id.content, f);
+    }
   }
 
   private static enum Tabs {
