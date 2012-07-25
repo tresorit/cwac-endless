@@ -89,6 +89,10 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   public void setSerialized(boolean isSerialized) {
     this.isSerialized=isSerialized;
   }
+  
+  public void restartAppending() {
+    keepOnAppending.set(true);
+  }
 
   /**
    * How many items are in the data set represented by this
