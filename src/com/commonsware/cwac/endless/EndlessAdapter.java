@@ -223,7 +223,7 @@ abstract public class EndlessAdapter extends AdapterWrapper {
       AsyncTask<Void, Void, Exception> {
     EndlessAdapter adapter=null;
 
-    AppendTask(EndlessAdapter adapter) {
+    protected AppendTask(EndlessAdapter adapter) {
       this.adapter=adapter;
     }
 
