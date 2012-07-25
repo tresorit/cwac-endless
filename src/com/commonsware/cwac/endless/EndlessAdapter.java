@@ -130,6 +130,15 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     return(super.getViewTypeCount() + 1);
   }
 
+  @Override
+  public Object getItem(int position) {
+    if (position >= super.getCount()) {
+      return(null);
+    }
+
+    return(super.getItem(position));
+  }
+
   /**
    * Get a View that displays the data at the specified
    * position in the data set. In this case, if we are at
