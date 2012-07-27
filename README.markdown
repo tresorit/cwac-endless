@@ -120,9 +120,10 @@ so you can do something to let the user know what went wrong.
 Have `onException()` return `true` if you want to retry loading data in the background,
 `false` otherwise.
 
-If your exceptional situation has recovered (e.g., you now have Internet
+*If* you returned `false` from `onException()` *and* whatever circumstances
+caused the exception should now be resolved (e.g., you now have Internet
 access where before you did not), call `restartAppending()`, and the
-normal logic will resume on the next scroll-to-the-bottom.
+normal "endless" behavior will resume on the next scroll-to-the-bottom.
 
 ### The Threading
 
