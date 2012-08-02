@@ -24,6 +24,7 @@ import android.os.Bundle;
 public class EndlessAdapterFragmentDemo extends Activity implements
     ActionBar.TabListener {
   private static final String TAG_SIMPLE="s";
+  private static final String TAG_CUSTOM_TASK="c";
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class EndlessAdapterFragmentDemo extends Activity implements
 
     bar.addTab(bar.newTab().setText(R.string.simple)
                   .setTabListener(this).setTag(Tabs.TAB_SIMPLE));
+    bar.addTab(bar.newTab().setText(R.string.custom)
+                  .setTabListener(this).setTag(Tabs.TAB_CUSTOM_TASK));
   }
 
   @Override
@@ -47,6 +50,9 @@ public class EndlessAdapterFragmentDemo extends Activity implements
     switch ((Tabs)tab.getTag()) {
       case TAB_SIMPLE:
         showSimple(ft);
+        break;
+      case TAB_CUSTOM_TASK:
+        showCustom(ft);
         break;
     }
   }
@@ -68,7 +74,20 @@ public class EndlessAdapterFragmentDemo extends Activity implements
     }
   }
 
+  private void showCustom(FragmentTransaction ft) {
+    Fragment f=getFragmentManager().findFragmentByTag(TAG_CUSTOM_TASK);
+
+    if (f == null) {
+      f=new EndlessAdapterCustomTaskFragment();
+      ft.replace(android.R.id.content, f, TAG_CUSTOM_TASK);
+    }
+    else if (f.isHidden()) {
+      ft.replace(android.R.id.content, f);
+    }
+  }
+
   private static enum Tabs {
-    TAB_SIMPLE;
+    TAB_SIMPLE,
+    TAB_CUSTOM_TASK;
   }
 }

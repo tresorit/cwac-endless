@@ -59,6 +59,7 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   private Context context;
   private int pendingResource=-1;
   private boolean isSerialized=false;
+  private boolean runInBackground=true;
 
   /**
    * Constructor wrapping a supplied ListAdapter
@@ -95,9 +96,30 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   }
 
   /**
-   * Use to manually notify the adapter that it's dataset
-   * has changed. Will remove the pendingView and update the
-   * display.
+   * When set to false, cacheInBackground is called directly, rather than from
+   * an AsyncTask.
+   *
+   * This is useful if for example you have code to populate the adapter that
+   * already runs in a background thread, and simply don't need the built in
+   * background functionality.
+   *
+   * When using this you must remember to call onDataReady() once you've
+   * appended your data.
+   *
+   * Default value is true.
+   *
+   * @param runInBackground
+   *
+   * :see #cacheInBackground()
+   * :see #onDataReady()
+   */
+  public void setRunInBackground(boolean runInBackground) {
+    this.runInBackground=runInBackground;
+  }
+
+  /**
+   * Use to manually notify the adapter that it's dataset has changed.  Will
+   * remove the pendingView and update the display.
    */
   public void onDataReady() {
     pendingView=null;
@@ -169,7 +191,16 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     if (position == super.getCount() && keepOnAppending.get()) {
       if (pendingView == null) {
         pendingView=getPendingView(parent);
-        executeAsyncTask(buildTask());
+
+        if (runInBackground) {
+          executeAsyncTask(buildTask());
+        } else {
+          try {
+            keepOnAppending.set(cacheInBackground());
+          } catch (Exception e) {
+            keepOnAppending.set(onException(pendingView, e));
+          }
+        }
       }
 
       return(pendingView);
@@ -284,3 +315,4 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     return(context);
   }
 }
+
