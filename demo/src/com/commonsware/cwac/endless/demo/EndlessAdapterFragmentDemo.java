@@ -17,14 +17,13 @@ package com.commonsware.cwac.endless.demo;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 public class EndlessAdapterFragmentDemo extends Activity implements
     ActionBar.TabListener {
-  private static final String TAG_SIMPLE="s";
-  private static final String TAG_CUSTOM_TASK="c";
+  private EndlessAdapterFragment simple=null;
+  private EndlessAdapterCustomTaskFragment customTask=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -63,31 +62,22 @@ public class EndlessAdapterFragmentDemo extends Activity implements
   }
 
   private void showSimple(FragmentTransaction ft) {
-    Fragment f=getFragmentManager().findFragmentByTag(TAG_SIMPLE);
+    if (simple == null) {
+      simple=new EndlessAdapterFragment();
+    }
 
-    if (f == null) {
-      f=new EndlessAdapterFragment();
-      ft.replace(android.R.id.content, f, TAG_SIMPLE);
-    }
-    else if (f.isHidden()) {
-      ft.replace(android.R.id.content, f);
-    }
+    ft.replace(android.R.id.content, simple);
   }
 
   private void showCustom(FragmentTransaction ft) {
-    Fragment f=getFragmentManager().findFragmentByTag(TAG_CUSTOM_TASK);
+    if (customTask == null) {
+      customTask=new EndlessAdapterCustomTaskFragment();
+    }
 
-    if (f == null) {
-      f=new EndlessAdapterCustomTaskFragment();
-      ft.replace(android.R.id.content, f, TAG_CUSTOM_TASK);
-    }
-    else if (f.isHidden()) {
-      ft.replace(android.R.id.content, f);
-    }
+    ft.replace(android.R.id.content, customTask);
   }
 
   private static enum Tabs {
-    TAB_SIMPLE,
-    TAB_CUSTOM_TASK;
+    TAB_SIMPLE, TAB_CUSTOM_TASK;
   }
 }
