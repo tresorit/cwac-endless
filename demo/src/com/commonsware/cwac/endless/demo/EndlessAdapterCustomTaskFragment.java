@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * This example makes use of EndlessAdapter's setRunInBackground feature.
  *
- * Calling setRetainInstance(false) allows you to launch your own AsyncTask
+ * Calling setRunInBackground(false) allows you to launch your own AsyncTask
  * with a listener callback, rather than using the built in cacheInBackground
  * functionality.
  *
