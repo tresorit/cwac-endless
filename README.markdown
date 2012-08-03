@@ -141,6 +141,13 @@ own subclass of the static `EndlessAdapter.AppendTask`, implement what you need
 override `buildTask()` in your `EndlessAdapter` subclass to create
 an instance of your own custom task class.
 
+If you would prefer that `EndlessAdapter` *not* run its own `AsyncTask`,
+then call `setRunInBackground(false)`. In this mode, your `cacheInBackground()`
+method will be called **on the main application thread**. It is up to you
+to arrange to do the work on your own background thread, then call `onDataReady()`
+when you want the adapter to update to reflect the newly added data. Note
+that `appendCachedData()` will not be used in this scenario.
+
 Dependencies
 ------------
 This project relies upon the [CWAC AdapterWrapper][adapter] project.
@@ -150,9 +157,8 @@ ones that you have patched yourself.
 
 Version
 -------
-This is version v0.9.1 of this module, which is causing the author
-some trepidation, seeing that "9" there, and thinking that it is
-an awfully big number.
+This is version v0.10.0 of this module, which means it is definitely time
+for the author to figure out when he will cut a v1.0.
 
 Demo
 ----
@@ -188,6 +194,7 @@ Do not ask for help via Twitter.
 
 Release Notes
 -------------
+* v0.10.0: added support for `setRunInBackground()`, cleaned up demos a bit
 * v0.9.1: made `AppendTask` constructor `protected`
 * v0.9.0: added `restartAppending()` and `buildTask()`, refactored `AppendTask`, added new sample activity
 * v0.8.0: added `setSerialized()` and `isSerialized()`
