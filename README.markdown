@@ -194,7 +194,7 @@ Do not ask for help via Twitter.
 
 Release Notes
 -------------
-* v0.10.0: added support for `setRunInBackground()`, cleaned up demos a bit
+* v0.10.0: added support for `setRunInBackground()` (patch courtesy of [brk3](https://github.com/brk3)), cleaned up demos a bit
 * v0.9.1: made `AppendTask` constructor `protected`
 * v0.9.0: added `restartAppending()` and `buildTask()`, refactored `AppendTask`, added new sample activity
 * v0.8.0: added `setSerialized()` and `isSerialized()`
