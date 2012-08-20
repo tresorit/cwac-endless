@@ -180,17 +180,33 @@ The code in this project is licensed under the Apache
 Software License 2.0, per the terms of the included LICENSE
 file.
 
-Questions
----------
+Getting Help
+------------
+Do not ask for help via Twitter.
+
+And, for those of you who skipped over that sentence: do not ask for help on Twitter. Anyone who thinks that
+developer support can be handled in 140-character chunks should not be attempting to use a CWAC component.
+
+Now, that being said, the rest of your help will be for bugs or questions.
+
+### Bugs
+
+If you are experiencing some sort of problem using this component, where you are fairly certain the component
+itself is at fault, please create a project that can reproduce the problem. Then, post the source code to
+that project somewhere (e.g., a public GitHub repo). Next, file an
+[issue](https://github.com/commonsguy/cwac-endless/issues), pointing to your project and providing
+instructions on how to reproduce the problem. Note that if you can reproduce the error with the project's
+own `demo/` sub-project, just provide the steps to reproduce the problem.
+
+Do not file an issue if you cannot reproduce the problem, or with only partial source code that may or may
+not be related to the problem.
+
+### Other Questions
+
 If you have questions regarding the use of this code, please post a question
 on [StackOverflow](http://stackoverflow.com/questions/ask) tagged with `commonsware` and `android`. Be sure to indicate
-what CWAC module you are having issues with, and be sure to include source code 
-and stack traces if you are encountering crashes.
-
-If you have encountered what is clearly a bug, please post an [issue](https://github.com/commonsguy/cwac-endless/issues). Be certain to include complete steps
-for reproducing the issue.
-
-Do not ask for help via Twitter.
+what CWAC module you are having issues with, and be sure to include *relevant* source code 
+and stack traces if you are encountering crashes. 
 
 Release Notes
 -------------
