@@ -157,8 +157,9 @@ ones that you have patched yourself.
 
 Version
 -------
-This is version v0.10.0 of this module, which means it is definitely time
-for the author to figure out when he will cut a v1.0.
+This is version v1.0 of this module. Booyah!
+
+(note: not to be confused with [OUYA](http://www.ouya.tv/))
 
 Demo
 ----
@@ -194,6 +195,7 @@ Do not ask for help via Twitter.
 
 Release Notes
 -------------
+* v1.0.0: made this the official 1.0 release
 * v0.10.0: added support for `setRunInBackground()`, cleaned up demos a bit
 * v0.9.1: made `AppendTask` constructor `protected`
 * v0.9.0: added `restartAppending()` and `buildTask()`, refactored `AppendTask`, added new sample activity
@@ -210,5 +212,4 @@ Who Made This?
 --------------
 <a href="http://commonsware.com">![CommonsWare](http://commonsware.com/images/logo.png)</a>
 
-[gg]: http://groups.google.com/group/cw-android
 [adapter]: http://github.com/commonsguy/cwac-adapter/tree/master
