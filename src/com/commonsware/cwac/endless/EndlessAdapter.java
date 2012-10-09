@@ -69,6 +69,19 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   }
 
   /**
+   * Constructor wrapping a supplied ListAdapter
+	 * and explicitly set if there is more data that
+	 * needs to be fetched or not.
+   *
+   * @param wrapped
+   * @param keepOnAppending
+	 */
+	public EndlessAdapter(ListAdapter wrapped, boolean keepOnAppending) {
+		super(wrapped);
+		this.keepOnAppending.set(keepOnAppending);
+	}
+
+  /**
    * Constructor wrapping a supplied ListAdapter and
    * providing a id for a pending view.
    * 
@@ -81,6 +94,25 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     super(wrapped);
     this.context=context;
     this.pendingResource=pendingResource;
+  }
+
+  /**
+   * Constructor wrapping a supplied ListAdapter,
+   * providing a id for a pending view and explicitly 
+   * set if there is more data that needs to be 
+   * fetched or not.
+   * 
+   * @param context
+   * @param wrapped
+   * @param pendingResource
+   * @param keepOnAppending
+   */
+  public EndlessAdapter(Context context, ListAdapter wrapped,
+                        int pendingResource, boolean keepOnAppending) {
+    super(wrapped);
+    this.context=context;
+    this.pendingResource=pendingResource;
+    this.keepOnAppending.set(keepOnAppending);
   }
 
   public boolean isSerialized() {
