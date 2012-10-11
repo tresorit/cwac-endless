@@ -95,7 +95,6 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     keepOnAppending.set(false);
   }
 
-
   public void restartAppending() {
     keepOnAppending.set(true);
   }
