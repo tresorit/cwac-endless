@@ -54,7 +54,7 @@ and your users will not perceive a difference.
 
 ### Constructors
 
-`EndlessAdapter` has two constructors. The original one takes a `ListAdapter` as
+`EndlessAdapter` has four constructors. The original one takes a `ListAdapter` as
 a parameter, representing the existing adapter to be made
 endless. Your `EndlessAdapter` subclass will need to override
 this constructor and chain upwards. For example, the DemoAdapter
@@ -65,6 +65,14 @@ to `EndlessAdapter`.
 The second constructor takes a `Context` and resource ID along with
 the `ListAdapter`. These will be used to create the placeholder
 (see below).
+
+The remaining pair are the same as the first, but take a boolean
+value to indicate whether or not there should be more data to add.
+Normally, you would not use these, but instead would skip the
+`EndlessAdapter` altogether if you have no data to append. However,
+there may be cases where that is inconvenient, and simply keeping
+the `EndlessAdapter` is easier, but there is no point in bothering
+actually having "endless" behavior.
 
 ### The Placeholder
 
@@ -157,9 +165,8 @@ ones that you have patched yourself.
 
 Version
 -------
-This is version v1.0 of this module. Booyah!
-
-(note: not to be confused with [OUYA](http://www.ouya.tv/))
+This is version v1.1 of this module. It should be backwards-compatible with v1.0,
+with only added methods.
 
 Demo
 ----
@@ -211,6 +218,7 @@ and stack traces if you are encountering crashes.
 
 Release Notes
 -------------
+* v1.1: merged two pull requests, adding new constructors and `stopAppending()`
 * v1.0.0: made this the official 1.0 release
 * v0.10.0: added support for `setRunInBackground()` (patch courtesy of [brk3](https://github.com/brk3)), cleaned up demos a bit
 * v0.9.1: made `AppendTask` constructor `protected`
