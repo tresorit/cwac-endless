@@ -123,6 +123,10 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     this.isSerialized=isSerialized;
   }
 
+  public void stopAppending() {
+    keepOnAppending.set(false);
+  }
+
   public void restartAppending() {
     keepOnAppending.set(true);
   }
