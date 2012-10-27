@@ -90,6 +90,13 @@ the `ListAdapter`, you can skip `getPendingView()`, and `EndlessAdapter`
 will inflate the supplied layout resource as needed to create
 this placeholder.
 
+This placeholder row, when visible, will be disabled for list
+item clicks, as of v1.2 of this library. **This is a regression**, but
+presently an unavoidable one, as clicking on that row while the background
+data fetch was going on could raise an `IllegalStateException`. Hence, few
+(if any) developers were likely relying upon clicks on the placeholder row,
+so this regression hopefully will harm few people.
+
 ### The Loading
 
 Your `EndlessAdapter` subclass also needs to implement `cacheInBackground()`.
@@ -156,6 +163,17 @@ to arrange to do the work on your own background thread, then call `onDataReady(
 when you want the adapter to update to reflect the newly added data. Note
 that `appendCachedData()` will not be used in this scenario.
 
+### The Overriding
+
+In addition to the methods mentioned above that you could override in a
+custom subclass of `EndlessAdapter`, note that if you elect to override
+`isEnabled()`, you should either return `false` *or* the value of 
+`EndlessAdapter`'s own `isEnabled()` via a chain to `super`. `EndlessAdapter`
+needs to mark the pending row placeholder as disabled. `EndlessAdapter`
+already then forwards `isEnabled()` for all other rows to your wrapped
+adapter, so it is simpler for you to just override `isEnabled()` there
+rather than by overriding `EndlessAdapter`'s implementation.
+
 Dependencies
 ------------
 This project relies upon the [CWAC AdapterWrapper][adapter] project.
@@ -166,7 +184,8 @@ ones that you have patched yourself.
 Version
 -------
 This is version v1.1 of this module. It should be backwards-compatible with v1.0,
-with only added methods.
+with only added methods. However, there is the one behavior regression (placeholder
+row no longer clickable) as noted above.
 
 Demo
 ----
@@ -218,6 +237,7 @@ and stack traces if you are encountering crashes.
 
 Release Notes
 -------------
+* v1.2: made pending view disabled for list item clicks, made fewer mods in BG thread
 * v1.1: merged two pull requests, adding new constructors and `stopAppending()`
 * v1.0.0: made this the official 1.0 release
 * v0.10.0: added support for `setRunInBackground()` (patch courtesy of [brk3](https://github.com/brk3)), cleaned up demos a bit
