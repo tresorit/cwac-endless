@@ -123,7 +123,7 @@ public class EndlessAdapterCustomTaskFragment extends ListFragment {
     protected ArrayList<Integer> doInBackground(Void... params) {
       ArrayList<Integer> result = new ArrayList<Integer>();
 
-      SystemClock.sleep(1000); // pretend to do work
+      SystemClock.sleep(3000); // pretend to do work
       for (int i=startPoint; i < startPoint+25; i++) {
         result.add(i);
       }
