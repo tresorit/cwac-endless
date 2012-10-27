@@ -183,7 +183,7 @@ ones that you have patched yourself.
 
 Version
 -------
-This is version v1.1 of this module. It should be backwards-compatible with v1.0,
+This is version v1.2 of this module. It should be backwards-compatible with v1.0,
 with only added methods. However, there is the one behavior regression (placeholder
 row no longer clickable) as noted above.
 
