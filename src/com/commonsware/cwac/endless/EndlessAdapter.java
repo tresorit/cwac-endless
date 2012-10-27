@@ -69,17 +69,17 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   }
 
   /**
-   * Constructor wrapping a supplied ListAdapter
-	 * and explicitly set if there is more data that
-	 * needs to be fetched or not.
-   *
+   * Constructor wrapping a supplied ListAdapter and
+   * explicitly set if there is more data that needs to be
+   * fetched or not.
+   * 
    * @param wrapped
    * @param keepOnAppending
-	 */
-	public EndlessAdapter(ListAdapter wrapped, boolean keepOnAppending) {
-		super(wrapped);
-		this.keepOnAppending.set(keepOnAppending);
-	}
+   */
+  public EndlessAdapter(ListAdapter wrapped, boolean keepOnAppending) {
+    super(wrapped);
+    this.keepOnAppending.set(keepOnAppending);
+  }
 
   /**
    * Constructor wrapping a supplied ListAdapter and
@@ -97,10 +97,9 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   }
 
   /**
-   * Constructor wrapping a supplied ListAdapter,
-   * providing a id for a pending view and explicitly 
-   * set if there is more data that needs to be 
-   * fetched or not.
+   * Constructor wrapping a supplied ListAdapter, providing
+   * a id for a pending view and explicitly set if there is
+   * more data that needs to be fetched or not.
    * 
    * @param context
    * @param wrapped
@@ -132,30 +131,31 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   }
 
   /**
-   * When set to false, cacheInBackground is called directly, rather than from
-   * an AsyncTask.
-   *
-   * This is useful if for example you have code to populate the adapter that
-   * already runs in a background thread, and simply don't need the built in
-   * background functionality.
-   *
-   * When using this you must remember to call onDataReady() once you've
-   * appended your data.
-   *
+   * When set to false, cacheInBackground is called
+   * directly, rather than from an AsyncTask.
+   * 
+   * This is useful if for example you have code to populate
+   * the adapter that already runs in a background thread,
+   * and simply don't need the built in background
+   * functionality.
+   * 
+   * When using this you must remember to call onDataReady()
+   * once you've appended your data.
+   * 
    * Default value is true.
-   *
+   * 
    * @param runInBackground
-   *
-   * :see #cacheInBackground()
-   * :see #onDataReady()
+   * 
+   *          :see #cacheInBackground() :see #onDataReady()
    */
   public void setRunInBackground(boolean runInBackground) {
     this.runInBackground=runInBackground;
   }
 
   /**
-   * Use to manually notify the adapter that it's dataset has changed.  Will
-   * remove the pendingView and update the display.
+   * Use to manually notify the adapter that it's dataset
+   * has changed. Will remove the pendingView and update the
+   * display.
    */
   public void onDataReady() {
     pendingView=null;
@@ -207,6 +207,20 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     return(super.getItem(position));
   }
 
+  @Override
+  public boolean areAllItemsEnabled() {
+    return(false);
+  }
+
+  @Override
+  public boolean isEnabled(int position) {
+    if (position >= super.getCount()) {
+      return(false);
+    }
+
+    return(super.isEnabled(position));
+  }
+
   /**
    * Get a View that displays the data at the specified
    * position in the data set. In this case, if we are at
@@ -230,10 +244,12 @@ abstract public class EndlessAdapter extends AdapterWrapper {
 
         if (runInBackground) {
           executeAsyncTask(buildTask());
-        } else {
+        }
+        else {
           try {
             keepOnAppending.set(cacheInBackground());
-          } catch (Exception e) {
+          }
+          catch (Exception e) {
             keepOnAppending.set(onException(pendingView, e));
           }
         }
@@ -289,6 +305,7 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   protected static class AppendTask extends
       AsyncTask<Void, Void, Exception> {
     EndlessAdapter adapter=null;
+    boolean tempKeep;
 
     protected AppendTask(EndlessAdapter adapter) {
       this.adapter=adapter;
@@ -299,7 +316,7 @@ abstract public class EndlessAdapter extends AdapterWrapper {
       Exception result=null;
 
       try {
-        adapter.keepOnAppending.set(adapter.cacheInBackground());
+        tempKeep=adapter.cacheInBackground();
       }
       catch (Exception e) {
         result=e;
@@ -310,6 +327,8 @@ abstract public class EndlessAdapter extends AdapterWrapper {
 
     @Override
     protected void onPostExecute(Exception e) {
+      adapter.keepOnAppending.set(tempKeep);
+
       if (e == null) {
         adapter.appendCachedData();
       }
@@ -351,4 +370,3 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     return(context);
   }
 }
-
