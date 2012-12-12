@@ -35,7 +35,7 @@ but may not work with other adapter types, particularly
 `SimpleAdapter`. It also will only work with a `ListView` or
 possibly other one-`View`-at-a-time `AdapterView` implementations.
 
-This is available as a JAR file from the downloads area of this GitHub repo.
+This is [available as a JAR file](https://github.com/commonsguy/downloads).
 The project itself is set up as an Android library project,
 in case you wish to use the source code in that fashion.
 
