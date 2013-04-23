@@ -174,6 +174,12 @@ already then forwards `isEnabled()` for all other rows to your wrapped
 adapter, so it is simpler for you to just override `isEnabled()` there
 rather than by overriding `EndlessAdapter`'s implementation.
 
+### Limitations
+
+`EndlessAdapter` does not work well as a child of other decorating adapters,
+notably the `HeaderListViewAdapter` that `ListView` creates if you use
+header or footer views.
+
 Dependencies
 ------------
 This project relies upon the [CWAC AdapterWrapper][adapter] project.
