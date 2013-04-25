@@ -78,7 +78,7 @@ abstract public class EndlessAdapter extends AdapterWrapper {
    */
   public EndlessAdapter(ListAdapter wrapped, boolean keepOnAppending) {
     super(wrapped);
-    this.keepOnAppending.set(keepOnAppending);
+    this.setKeepOnAppending(keepOnAppending);
   }
 
   /**
@@ -111,7 +111,7 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     super(wrapped);
     this.context=context;
     this.pendingResource=pendingResource;
-    this.keepOnAppending.set(keepOnAppending);
+    this.setKeepOnAppending(keepOnAppending);
   }
 
   public boolean isSerialized() {
@@ -123,11 +123,11 @@ abstract public class EndlessAdapter extends AdapterWrapper {
   }
 
   public void stopAppending() {
-    keepOnAppending.set(false);
+    setKeepOnAppending(false);
   }
 
   public void restartAppending() {
-    keepOnAppending.set(true);
+    setKeepOnAppending(true);
   }
 
   /**
@@ -247,10 +247,10 @@ abstract public class EndlessAdapter extends AdapterWrapper {
         }
         else {
           try {
-            keepOnAppending.set(cacheInBackground());
+            setKeepOnAppending(cacheInBackground());
           }
           catch (Exception e) {
-            keepOnAppending.set(onException(pendingView, e));
+            setKeepOnAppending(onException(pendingView, e));
           }
         }
       }
@@ -295,6 +295,17 @@ abstract public class EndlessAdapter extends AdapterWrapper {
       task.execute(params);
     }
   }
+  
+  private void setKeepOnAppending(boolean newValue) {
+    boolean same=(newValue==keepOnAppending.get());
+    
+    keepOnAppending.set(newValue);
+    
+    if (!same) {
+Log.w(getClass().getSimpleName(), String.format("keepOnAppending now %b", keepOnAppending.get()), new Exception("Hi!"));
+      notifyDataSetChanged();
+    }
+  }
 
   /**
    * A background task that will be run when there is a need
@@ -327,13 +338,13 @@ abstract public class EndlessAdapter extends AdapterWrapper {
 
     @Override
     protected void onPostExecute(Exception e) {
-      adapter.keepOnAppending.set(tempKeep);
+      adapter.setKeepOnAppending(tempKeep);
 
       if (e == null) {
         adapter.appendCachedData();
       }
       else {
-        adapter.keepOnAppending.set(adapter.onException(adapter.pendingView,
+        adapter.setKeepOnAppending(adapter.onException(adapter.pendingView,
                                                         e));
       }
 
