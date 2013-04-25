@@ -35,7 +35,7 @@ but may not work with other adapter types, particularly
 `SimpleAdapter`. It also will only work with a `ListView` or
 possibly other one-`View`-at-a-time `AdapterView` implementations.
 
-This is available as a JAR file from the downloads area of this GitHub repo.
+This is [available as a JAR file](https://github.com/commonsguy/downloads).
 The project itself is set up as an Android library project,
 in case you wish to use the source code in that fashion.
 
@@ -174,12 +174,22 @@ already then forwards `isEnabled()` for all other rows to your wrapped
 adapter, so it is simpler for you to just override `isEnabled()` there
 rather than by overriding `EndlessAdapter`'s implementation.
 
+### Limitations
+
+`EndlessAdapter` does not work well as a child of other decorating adapters,
+notably the `HeaderListViewAdapter` that `ListView` creates if you use
+header or footer views.
+
 Dependencies
 ------------
 This project relies upon the [CWAC AdapterWrapper][adapter] project.
 A copy of compatible JARs can be found in the `libs/` directory
 of the project, though you are welcome to try newer ones, or
 ones that you have patched yourself.
+
+This project should work on API Level 4 and higher, except for any portions that
+may be noted otherwise in this document. Please report bugs if you find features
+that do not work on API Level 4 and are not noted as requiring a higher version.
 
 Version
 -------
