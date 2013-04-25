@@ -193,7 +193,7 @@ that do not work on API Level 4 and are not noted as requiring a higher version.
 
 Version
 -------
-This is version v1.2 of this module. It should be backwards-compatible with v1.0,
+This is version v1.2.1 of this module. It should be backwards-compatible with v1.0,
 with only added methods. However, there is the one behavior regression (placeholder
 row no longer clickable) as noted above.
 
@@ -247,6 +247,7 @@ and stack traces if you are encountering crashes.
 
 Release Notes
 -------------
+* v1.2.1: fix for `IllegalStateException: The content of the adapter has changed` bug
 * v1.2: made pending view disabled for list item clicks, made fewer mods in BG thread
 * v1.1: merged two pull requests, adding new constructors and `stopAppending()`
 * v1.0.0: made this the official 1.0 release
