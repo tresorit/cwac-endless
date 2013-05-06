@@ -302,7 +302,6 @@ abstract public class EndlessAdapter extends AdapterWrapper {
     keepOnAppending.set(newValue);
     
     if (!same) {
-Log.w(getClass().getSimpleName(), String.format("keepOnAppending now %b", keepOnAppending.get()), new Exception("Hi!"));
       notifyDataSetChanged();
     }
   }
