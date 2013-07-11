@@ -35,7 +35,7 @@ but may not work with other adapter types, particularly
 `SimpleAdapter`. It also will only work with a `ListView` or
 possibly other one-`View`-at-a-time `AdapterView` implementations.
 
-This is [available as a JAR file](https://github.com/commonsguy/downloads).
+This is [available as a JAR file](https://github.com/commonsguy/cwac-endless/releases).
 The project itself is set up as an Android library project,
 in case you wish to use the source code in that fashion.
 
@@ -193,7 +193,7 @@ that do not work on API Level 4 and are not noted as requiring a higher version.
 
 Version
 -------
-This is version v1.2.2 of this module. It should be backwards-compatible with v1.0,
+This is version v1.2.2 of this module. It should be backwards-compatible with v1.0.0,
 with only added methods. However, there is the one behavior regression (placeholder
 row no longer clickable) as noted above.
 
