@@ -15,6 +15,8 @@
 
 package com.commonsware.cwac.endless;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -24,11 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ListAdapter;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import com.commonsware.cwac.adapter.AdapterWrapper;
 import com.commonsware.cwac.adapter.ExpandableAdapterWrapper;
 
 /**
@@ -49,7 +47,7 @@ import com.commonsware.cwac.adapter.ExpandableAdapterWrapper;
  * know you are out of data, plus return false from that final call to
  * appendInBackground().
  */
-abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper {
+abstract public class ExpandableEndlessAdapter extends ExpandableAdapterWrapper {
 	abstract protected boolean cacheInBackground() throws Exception;
 
 	abstract protected void appendCachedData();
@@ -64,7 +62,7 @@ abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper 
 	/**
 	 * Constructor wrapping a supplied ListAdapter
 	 */
-	public ExpendableEndlessAdapter(BaseExpandableListAdapter wrapped) {
+	public ExpandableEndlessAdapter(BaseExpandableListAdapter wrapped) {
 		super(wrapped);
 	}
 
@@ -75,7 +73,7 @@ abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper 
 	 * @param wrapped
 	 * @param keepOnAppending
 	 */
-	public ExpendableEndlessAdapter(BaseExpandableListAdapter wrapped, boolean keepOnAppending) {
+	public ExpandableEndlessAdapter(BaseExpandableListAdapter wrapped, boolean keepOnAppending) {
 		super(wrapped);
 		this.setKeepOnAppending(keepOnAppending);
 	}
@@ -88,7 +86,7 @@ abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper 
 	 * @param wrapped
 	 * @param pendingResource
 	 */
-	public ExpendableEndlessAdapter(Context context, BaseExpandableListAdapter wrapped, int pendingResource) {
+	public ExpandableEndlessAdapter(Context context, BaseExpandableListAdapter wrapped, int pendingResource) {
 		super(wrapped);
 		this.context = context;
 		this.pendingResource = pendingResource;
@@ -104,7 +102,7 @@ abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper 
 	 * @param pendingResource
 	 * @param keepOnAppending
 	 */
-	public ExpendableEndlessAdapter(Context context, BaseExpandableListAdapter wrapped, int pendingResource, boolean keepOnAppending) {
+	public ExpandableEndlessAdapter(Context context, BaseExpandableListAdapter wrapped, int pendingResource, boolean keepOnAppending) {
 		super(wrapped);
 		this.context = context;
 		this.pendingResource = pendingResource;
@@ -161,7 +159,7 @@ abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper 
 	 * How many items are in the data set represented by this Adapter.
 	 */
 	@Override
-	public int getCount() {
+	public int getGroupCount() {
 		if (keepOnAppending.get()) {
 			return (super.getGroupCount() + 1); // one more for
 			// "pending"
@@ -170,16 +168,17 @@ abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper 
 		return (super.getGroupCount());
 	}
 
+	
 	/**
 	 * Masks ViewType so the AdapterView replaces the "Pending" row when new
 	 * data is loaded.
 	 */
-	public int getItemViewType(int position) {
-		if (position == getWrappedAdapter().getGroupCount()) {
-			return (IGNORE_ITEM_VIEW_TYPE);
+	@Override
+	public int getGroupType(int groupPosition) {
+		if (groupPosition == getWrappedAdapter().getGroupCount()) {
+			return (-1);
 		}
-
-		return (super.getItemViewType(position));
+		return super.getGroupType(groupPosition);
 	}
 
 	/**
@@ -288,10 +287,10 @@ abstract public class ExpendableEndlessAdapter extends ExpandableAdapterWrapper 
 	 * the background thread and rebind the pending view once that is done.
 	 */
 	protected static class AppendTask extends AsyncTask<Void, Void, Exception> {
-		ExpendableEndlessAdapter adapter = null;
+		ExpandableEndlessAdapter adapter = null;
 		boolean tempKeep;
 
-		protected AppendTask(ExpendableEndlessAdapter adapter) {
+		protected AppendTask(ExpandableEndlessAdapter adapter) {
 			this.adapter = adapter;
 		}
 
